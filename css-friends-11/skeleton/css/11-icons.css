@@ -1,0 +1,24 @@
+/* PHASE 11: Icons */
+
+.icon-comment {
+  background-position: 0 0;
+}
+
+.icon-reblog {
+  background-position: 0 -100px;
+}
+
+.icon-favorite {
+  background-position: 0 -50px;
+}
+
+[class*="icon-"] {
+  /* background-image: url("https://github.com/appacademy/curriculum/blob/master/html-css/micro-projects/css-friends/docs/images/sprite.png"); */
+  background-image: url(../images/sprite.png);
+  background-size: 25px;
+  display: inline-block;
+  width: 25px;
+  height: 0;
+  overflow: hidden;
+  padding-top: 25px;
+}

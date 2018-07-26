@@ -1,19 +1,29 @@
 const APIUtil = {
-    followUser: id =>{
-      let promise = $.ajax({
+    followUser: id => {
+      return $.ajax({
         url: `/users/${id}/follow`,
         dataType: 'json',
         method: 'POST'
       });
-      return promise;
+
     },
-    unfollowUser: id =>{
-      let promise = $.ajax({
+    unfollowUser: id => (
+      $.ajax({
         url: `/users/${id}/follow`,
         dataType: 'json',
         method: 'DELETE',
+      })
+    ),
+    searchUsers: (queryVal, success) =>{
+      let promise = $.ajax({
+        url: `/users/search`,
+        dataType: 'json',
+        method: 'GET',
+        data: {
+          queryVal: queryVal
+        }
       });
-      return promise;
+       return promise;
     }
 };
 module.exports = APIUtil;

@@ -7,7 +7,7 @@ class FollowToggle{
     this.userId = this.$el.data("user-id");
     this.followState = this.$el.data("initial-follow-state");
     // debugger;
-    console.log("Creating new FollowToggle");
+    // console.log("Creating new FollowToggle");
     this.render();
     this.$el.on("click", this.handleClick.bind(this));
   }
@@ -48,8 +48,8 @@ class FollowToggle{
   handleClick(event){
     event.preventDefault();
 
-    console.log("Click is being handled now.");
-    console.log(this.followState);
+    // console.log("Click is being handled now.");
+    // console.log(this.followState);
     if (this.followState === false) {
       this.handleFollow();
     } else {

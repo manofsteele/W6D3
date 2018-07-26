@@ -94,21 +94,31 @@
 /***/ (function(module, exports) {
 
 const APIUtil = {
-    followUser: id =>{
-      let promise = $.ajax({
+    followUser: id => {
+      return $.ajax({
         url: `/users/${id}/follow`,
         dataType: 'json',
         method: 'POST'
       });
-      return promise;
+
     },
-    unfollowUser: id =>{
-      let promise = $.ajax({
+    unfollowUser: id => (
+      $.ajax({
         url: `/users/${id}/follow`,
         dataType: 'json',
         method: 'DELETE',
+      })
+    ),
+    searchUsers: (queryVal, success) =>{
+      let promise = $.ajax({
+        url: `/users/search`,
+        dataType: 'json',
+        method: 'GET',
+        data: {
+          queryVal: queryVal
+        }
       });
-      return promise;
+       return promise;
     }
 };
 module.exports = APIUtil;
@@ -132,7 +142,7 @@ class FollowToggle{
     this.userId = this.$el.data("user-id");
     this.followState = this.$el.data("initial-follow-state");
     // debugger;
-    console.log("Creating new FollowToggle");
+    // console.log("Creating new FollowToggle");
     this.render();
     this.$el.on("click", this.handleClick.bind(this));
   }
@@ -173,8 +183,8 @@ class FollowToggle{
   handleClick(event){
     event.preventDefault();
 
-    console.log("Click is being handled now.");
-    console.log(this.followState);
+    // console.log("Click is being handled now.");
+    // console.log(this.followState);
     if (this.followState === false) {
       this.handleFollow();
     } else {
@@ -196,14 +206,53 @@ module.exports = FollowToggle;
 /***/ (function(module, exports, __webpack_require__) {
 
 const FollowToggle =__webpack_require__ (/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
-
+const UsersSearch = __webpack_require__ (/*! ./users_search.js */ "./frontend/users_search.js");
 // document ready callback:
 $( "document" ).ready(()=>{
   let $toggle_button = $('button.follow-toggle');
   $toggle_button.each((idx,el)=>{
     new FollowToggle(el);
   });
+  let $users_search = $('nav.users-search');
+  $users_search.each((idx,el)=>{
+    new UsersSearch(el);
+  });
 });
+
+
+/***/ }),
+
+/***/ "./frontend/users_search.js":
+/*!**********************************!*\
+  !*** ./frontend/users_search.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtil = __webpack_require__(/*! ./api_util.js */ "./frontend/api_util.js");
+
+class UsersSearch {
+
+  constructor(el) {
+    console.log("made a new user search");
+    this.$el = $(el);
+    this.input = this.$el.data("input");
+    this.$ul = $($el.ul);
+
+  }
+
+  handleInput() {
+    let val = this.$el.text();
+    APIUtil.searchUsers(val).then(() => {
+
+
+    });
+  }
+
+
+}
+
+module.exports = UsersSearch;
 
 
 /***/ })
